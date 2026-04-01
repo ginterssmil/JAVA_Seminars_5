@@ -1,13 +1,17 @@
 package lv.venta.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Product {
+	@Setter(value = AccessLevel.NONE)
 	private long id;
 	private String title;
 	private float price;
@@ -15,6 +19,7 @@ public class Product {
 	private String description;
 	private ProductType productType;
 	
+	private static long counter = 0;
 	//getters - nak no lombok bibliotekas
 	//setters - nak no lombok bibliotekas
 	
@@ -24,5 +29,8 @@ public class Product {
 		setQuantity(inputQuantity);
 		setDescription(inputDescription);
 		setProductType(inputProductType);
+		id = counter++;
 	}
+	
+	//toString - nak no lombok bibliotekas
 }
