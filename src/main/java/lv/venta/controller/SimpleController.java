@@ -35,4 +35,10 @@ public class SimpleController {
 		return "show-one-product-page";//tiks paradita show-one-product-page.html
 	}
 	
+	@GetMapping("/allproducts") //localhost:8080/simple/allproducts
+	public String getAllProductsInPage(Model model) {
+		
+		//TODO model.addAttribute("package", temp);
+		return "show-all-products-page";//tiks paradita show-all-product-page.html
+	}
 }
