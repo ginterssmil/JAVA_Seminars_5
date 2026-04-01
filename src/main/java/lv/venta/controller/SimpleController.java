@@ -21,7 +21,7 @@ public class SimpleController {
 		System.out.println("Izpildas datu kontrolieris");
 		Random rand = new Random();
 		String data = "@Gint" + rand.nextInt(2010,2026);
-		model.addAttribute("pacakge", data);
+		model.addAttribute("package", data);
 		return "show-data-page";//tiks paradita show-data-page.html
 	}
 	
