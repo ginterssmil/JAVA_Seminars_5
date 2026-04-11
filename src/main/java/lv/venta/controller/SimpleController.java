@@ -65,4 +65,19 @@ public class SimpleController {
 		System.out.println(product);
 		return "redirect:/simple/page";
 	}
+	
+	@GetMapping("/update")//localhost:8080/simple/update
+	public String getUpdateProduct(Model model) {
+		//TODO izmantot kadu filtru, lai samekletu konkreto produktu, kuru atjauninat
+		Product prod = new Product("Abols", (float)0.99, 5, "Polija", ProductType.fruit);
+		model.addAttribute("product", prod);
+		return "update-product-page";	
+	}
+	
+	@PostMapping("/update")
+	public String postUpdateProduct(Product product) {
+		//TODO veic datu parbaudi un sagalbasanu redigejama produkta
+		System.out.println(product);
+		return "redirect:/simple/page";
+	}
 }
