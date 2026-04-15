@@ -1,5 +1,8 @@
 package lv.venta.model;
 
+import org.hibernate.annotations.processing.Pattern;
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,15 +27,30 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	
 	@Column(name = "Title")
+	@NotNull
+	@NotEmpty
+	@Pattern(regexp = "[A-Z]{1}[a-z]{2,30}")
 	private String title;
+	
 	@Column(name = "Price")
+	@Min(0)
+	@Max(1000)
 	private float price;
+	
 	@Column(name = "Quantity")
+	@Min(0)
+	@Max(500)
 	private int quantity;
+	
 	@Column(name = "Description")
+	@NotNull(message = "Aprakstam jabut realam")
+	@Pattern(regexp = "[A-Za-z ,.0-9]{0,400}")
 	private String description;
+	
 	@Column(name = "ProductType")
+	@NotNull
 	private ProductType productType;
 	
 	//getters - nak no lombok bibliotekas
