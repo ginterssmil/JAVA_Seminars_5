@@ -23,7 +23,26 @@ public class ProductCRUDServiceimpl implements IProductCRUDService{
 	
 	@Override
 	public void create(String title, float price, int quantity, String description, ProductType type) throws Exception {
-		// TODO Auto-generated method stub
+		if(title == null || !title.matches("[A-Z]{1}[a-z]{2,30}")
+				|| price < 0 || price > 1000
+				|| quantity <0 || quantity > 100
+				|| description == null || !description.matches("[A-Za-z ,.0-9]{0,400}")
+				|| type == null) {
+			throw new Exception("Kands no ievades argumentiem nav atbilstoss");
+		}
+		
+		//parbaudam, vai tads produkts jau eksiste, ja ta, tad papildinam krajumus
+		if(prodRepo.existsByTitleAndPriceAndDescriptionAndProductType(title, price, description, type)) {
+			Product productFromDB = prodRepo.findByTitleAndPriceAndDescriptionAndProductType(title, price, description, type);
+			
+			int newQuantity = productFromDB.getQuantity() + quantity;
+			productFromDB.setQuantity(newQuantity);
+			prodRepo.save(productFromDB);
+		}
+		else {
+			Product newProduct = new Product(title, price, quantity, description, type);
+			prodRepo.save(newProduct);
+		}
 		
 	}
 
@@ -55,8 +74,8 @@ public class ProductCRUDServiceimpl implements IProductCRUDService{
 
 	@Override
 	public void deleteById(long id) throws Exception {
-		// TODO Auto-generated method stub
-		
+		Product productFromDB = retrieveById(id);
+		prodRepo.delete(productFromDB);
 	}
 
 }
