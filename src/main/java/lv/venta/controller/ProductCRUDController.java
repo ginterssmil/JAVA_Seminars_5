@@ -18,7 +18,7 @@ public class ProductCRUDController {
 	@GetMapping("/all")//localhost:8080/product/crud/all
 	public String getAllProducts(Model model) {
 		try {
-			model.addAttribute("package", prodService.retrieveAll()));
+			model.addAttribute("package", prodService.retrieveAll());
 			return "show-all-product-page";
 		}
 		catch  (Exception e){
