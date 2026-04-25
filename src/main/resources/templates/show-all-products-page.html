@@ -2,7 +2,7 @@
 	
 	<body>
 		
-		<h1>Produkti no JAVA puses </h1>
+		<h1 th:text="${MyHeader}">Produkti no JAVA puses </h1>
 		<table >
 			<tr th:each="tempP : ${package}">
 				<td th:text="${tempP.id}"></td>

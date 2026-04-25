@@ -3,12 +3,14 @@ package lv.venta.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.validation.Valid;
 import lv.venta.model.Product;
 import lv.venta.model.ProductType;
 import lv.venta.service.IProductCRUDService;
@@ -67,7 +69,13 @@ public class ProductCRUDController {
 	
 	
 	@PostMapping("/add")
-	public String postAddNewProduct(Product product, Model model) {
+	public String postAddNewProduct(@Valid Product product, BindingResult result, Model model) {
+		//ja ievades datos kluda
+		if(result.hasErrors()) {
+			return "add-new-product-page";
+		}
+		
+		
 		try {
 			prodService.create(product.getTitle(), product.getPrice(), product.getQuantity(),
 					product.getDescription(), product.getProductType());
