@@ -23,12 +23,12 @@ public class ProductCRUDServiceimpl implements IProductCRUDService{
 	
 	@Override
 	public void create(String title, float price, int quantity, String description, ProductType type) throws Exception {
-		if(title == null || !title.matches("[A-Z]{1}[a-z]{2,30}")
+		if(title == null || !title.matches("[A-Za-z ]{2,30}")
 				|| price < 0 || price > 1000
 				|| quantity <0 || quantity > 100
 				|| description == null || !description.matches("[A-Za-z ,.0-9]{0,400}")
 				|| type == null) {
-			throw new Exception("Kands no ievades argumentiem nav atbilstoss");
+			throw new Exception("Kads no ievades argumentiem nav atbilstoss");
 		}
 		
 		//parbaudam, vai tads produkts jau eksiste, ja ta, tad papildinam krajumus
