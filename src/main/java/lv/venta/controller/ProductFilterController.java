@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lv.venta.model.Product;
+import lv.venta.model.ProductType;
 import lv.venta.service.IProductFilterService;
 
 @Controller
@@ -34,12 +35,13 @@ public class ProductFilterController {
 		
 	}
 	
-	@GetMapping("/pricesss/{threshold}")
-	public String getFilterProductByType(@PathVariable(name = "threshold") float threshold, Model model) {
+	@GetMapping("/producttype/{type}")
+	public String getFilterProductByType(@PathVariable(name = "type") ProductType type, Model model) {
 		
 		try {
-			ArrayList<Product> productsFromDB = prodFilterService.filterByPriceLessThan(threshold);
-			model.addAttribute("MyHeader", "Produkti kuru cena ir zem" + threshold + "eur");
+			ArrayList<Product> productsFromDB = prodFilterService.filterByType(type);
+			model.addAttribute("package", productsFromDB);
+			model.addAttribute("MyHeader", "Produkti kuri ir " + type);
 			return "show-all-products-page";
 		} catch (Exception e) {
 			model.addAttribute("package", e.getMessage());
@@ -48,12 +50,13 @@ public class ProductFilterController {
 		
 	}
 	
-	@GetMapping("/pricessssss/{threshold}")
-	public String getFilterProductByKeyw(@PathVariable(name = "threshold") float threshold, Model model) {
+	@GetMapping("/keyword/{keyword}")
+	public String getFilterProductByKeyword(@PathVariable(name = "keyword") String keyword, Model model) {
 		
 		try {
-			ArrayList<Product> productsFromDB = prodFilterService.filterByPriceLessThan(threshold);
-			model.addAttribute("MyHeader", "Produkti kuru cena ir zem" + threshold + "eur");
+			ArrayList<Product> productsFromDB = prodFilterService.filterByKeyword(keyword);
+			model.addAttribute("package", productsFromDB);
+			model.addAttribute("MyHeader", "Rezultāti vaicājumam " + "\"" + keyword +  "\"" );
 			return "show-all-products-page";
 		} catch (Exception e) {
 			model.addAttribute("package", e.getMessage());
@@ -62,5 +65,18 @@ public class ProductFilterController {
 		
 	}
 	
-	
+	@GetMapping("/search/{keyword}")
+	public String getCalculateAvgPrice(Model model) {
+		
+		try {
+			float avgPrice = prodFilterService.calculateAvgPrice();
+			model.addAttribute("package", avgPrice);
+			model.addAttribute("MyHeader", "Produktu videja cena ir " + avgPrice);
+			return "show-all-products-page";
+		} catch (Exception e) {
+			model.addAttribute("package", e.getMessage());
+			return "error-page";
+		}
+		
+	}
 }

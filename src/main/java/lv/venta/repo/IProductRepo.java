@@ -13,8 +13,6 @@ public interface IProductRepo extends CrudRepository<Product, Long>{
 			ProductType type);
 	//TODO Papildinat pec nepieicsamibas citas funkcijas
 
-	Product findByTitleAndPriceAndDescriptionAndProductType(String title, float price, String description,
-			ProductType type);
 
 	ArrayList<Product> findByPriceLessThan(float threshold);
 
@@ -23,6 +21,9 @@ public interface IProductRepo extends CrudRepository<Product, Long>{
 	ArrayList<Product> findByTitleContainingOrDescriptionContaining(String keyword, String keyword2);
 	@Query(nativeQuery = true, value = "SELECT AVG(price) FROM PRODUCT_TABLE;")
 	float calculateAvgPriceFromDB();
+
+	ArrayList<Product> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String keyword,
+			String keyword2);
 	
 	
 
